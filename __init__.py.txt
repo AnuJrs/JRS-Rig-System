@@ -1,0 +1,39 @@
+bl_info = {
+    "name": "JRS Rig System",
+    "author": "AnuJrs",
+    "version": (1, 0),
+    "blender": (4, 4, 0),
+    "location": "View3D > Sidebar > JRS Rig",
+    "description": "Sistema de Rig profissional para Blender",
+    "category": "Rigging",
+}
+
+import bpy
+
+from . import rig_jrs
+
+
+def menu_func(self, context):
+    self.layout.operator(rig_jrs.JRS_OT_CreateRig.bl_idname)
+
+
+classes = (
+    rig_jrs.JRS_PT_Panel,
+    rig_jrs.JRS_OT_CreateRig,
+)
+
+
+def register():
+    for cls in classes:
+        bpy.utils.register_class(cls)
+    bpy.types.VIEW3D_MT_object.append(menu_func)
+
+
+def unregister():
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
+    bpy.types.VIEW3D_MT_object.remove(menu_func)
+
+
+if __name__ == "__main__":
+    register()

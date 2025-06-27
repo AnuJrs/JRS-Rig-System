@@ -1,0 +1,28 @@
+import bpy
+
+
+class JRS_PT_Panel(bpy.types.Panel):
+    bl_label = "JRS Rig"
+    bl_idname = "JRS_PT_panel"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'JRS Rig'
+
+    def draw(self, context):
+        layout = self.layout
+        layout.operator("jrs.create_rig", text="Criar Rig")
+
+
+class JRS_OT_CreateRig(bpy.types.Operator):
+    bl_label = "Criar Rig"
+    bl_idname = "jrs.create_rig"
+    bl_description = "Cria um rig simples JRS"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        bpy.ops.object.armature_add()
+        arm = context.active_object
+        arm.name = "JRS_Rig"
+
+        self.report({'INFO'}, "Rig JRS criado com sucesso!")
+        return {'FINISHED'}
